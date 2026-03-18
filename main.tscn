@@ -23,7 +23,7 @@ background_mode = 2
 background_color = Color(0.582, 0.9376666, 0.97, 1)
 sky = SubResource("Sky_lquwl")
 ambient_light_source = 2
-ambient_light_color = Color(0.56, 0.53853333, 0.4312, 1)
+ambient_light_color = Color(0.74, 0.71533334, 0.592, 1)
 reflected_light_source = 1
 
 [node name="Node3D" type="Node3D"]
