@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1gvk7nydbm5t"]
+
+[ext_resource type="Script" uid="uid://c7udav3e6yg7b" path="res://scripts/ui/furniture_button.gd" id="2_milpq"]
+[ext_resource type="PackedScene" uid="uid://c78ck1rtqh7jg" path="res://furniture/furniture.tscn" id="3_r5d3r"]
+
+[node name="Furniture_0" type="Button"]
+custom_minimum_size = Vector2(50, 50)
+offset_right = 50.0
+offset_bottom = 50.0
+size_flags_vertical = 4
+action_mode = 0
+keep_pressed_outside = true
+script = ExtResource("2_milpq")
+furniture_scene = ExtResource("3_r5d3r")
