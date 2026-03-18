@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://fstm5i3qq632"]
+[gd_scene load_steps=12 format=3 uid="uid://fstm5i3qq632"]
 
 [ext_resource type="PackedScene" uid="uid://dsusbg0u18rv1" path="res://camera.tscn" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://dbrxtpwg4211i" path="res://environment/panorama_xcx.jpg" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://d3i56vymafxpd" path="res://room.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dhbxr3u6qksju" path="res://scripts/arrangers/arranger_1.gd" id="3_5vw27"]
 [ext_resource type="Script" uid="uid://buwudggba3fp5" path="res://scripts/ui/furniture_picker.gd" id="6_272bh"]
@@ -10,15 +9,21 @@
 [ext_resource type="PackedScene" uid="uid://b1gvk7nydbm5t" path="res://ui/furniture_button.tscn" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://c2s84wf3il6ii" path="res://furniture/furniture_wall.tscn" id="8_5vw27"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1bvp3"]
-panorama = ExtResource("1_h2yge")
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5vw27"]
+sky_top_color = Color(2.5990605e-05, 0.73407626, 0.9291402, 1)
+sky_horizon_color = Color(0.77254903, 0.9019608, 0.88235295, 1)
+ground_bottom_color = Color(0.42799997, 0.8, 0.304, 1)
+ground_horizon_color = Color(0.774, 0.9, 0.8832, 1)
 
 [sub_resource type="Sky" id="Sky_lquwl"]
-sky_material = SubResource("PanoramaSkyMaterial_1bvp3")
+sky_material = SubResource("ProceduralSkyMaterial_5vw27")
 
 [sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+background_color = Color(0.582, 0.9376666, 0.97, 1)
 sky = SubResource("Sky_lquwl")
-ambient_light_source = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.56, 0.53853333, 0.4312, 1)
 reflected_light_source = 1
 
 [node name="Node3D" type="Node3D"]
