@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkkym1mohq8tt"]
-
-[ext_resource type="Script" uid="uid://c5nby4328jvdq" path="res://scripts/arrangers/arranger.gd" id="1_cgh25"]
-
-[node name="Arranger" type="Node"]
-script = ExtResource("1_cgh25")
