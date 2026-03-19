@@ -10,9 +10,7 @@ Möbel können in einem anpassbaren Raum platziert und durch einen Layout-Algori
 - **Manuelle Platzierung**: Möbel per Mausklick im Raum positionieren
 - **Möbel bearbeiten**: Grösse anpassen oder Möbelstück löschen (Klick auf Objekt)
 - **Raum bearbeiten**: Breite, Tiefe und Höhe des Raums per Klick auf den Boden/Decke einstellen
-- **Automatische Anordnung** per Algorithmus-Picker:
-  - **V1** – Regelbasiert, platziert Möbel sofort an Wänden (grösste zuerst, zufällige Wandreihenfolge)
-  - **V2** – Schrittweise, animierte Platzierung mit Verschiebungslogik für Überlappungen
+- **Automatische Anordnung** Schrittweise, animierte Platzierung mit Verschiebungslogik für Überlappungen
 
 ## Voraussetzungen
 
