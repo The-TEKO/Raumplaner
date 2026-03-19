@@ -2,16 +2,17 @@ extends Node
 class_name FurniturePicker
 
 signal furniture_added(furniture: Furniture, position: Vector3)
+signal furniture_removed(furniture: Furniture)
 
-@export var button_container_path: NodePath
-@export var furniture_container_path: NodePath
+@export_node_path("VBoxContainer") var button_container_path: NodePath
+@export_node_path("Node3D") var furniture_3d_container_path: NodePath
 
 var selected_furniture_scene: PackedScene = null
 var preview_instance: Furniture = null
 var camera: Camera3D = null
 
 @onready var button_container: Node = get_node(button_container_path)
-@onready var furniture_container: Node3D = get_node(furniture_container_path)
+@onready var furniture_3d_container: Node3D = get_node(furniture_3d_container_path)
 
 func _ready() -> void:
 	camera = get_viewport().get_camera_3d() # get current camera
@@ -32,7 +33,8 @@ func create_preview() -> void:
 		return
 
 	preview_instance = selected_furniture_scene.instantiate() as Furniture
-	furniture_container.add_child(preview_instance)
+	preview_instance.name = "PREVIEW"
+	furniture_3d_container.add_child(preview_instance)
 	update_preview_position()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -75,7 +77,7 @@ func place_selected_furniture() -> void:
 
 	var placed := selected_furniture_scene.instantiate() as Furniture
 	placed.global_transform = preview_instance.global_transform
-	furniture_container.add_child(placed)
+	furniture_3d_container.add_child(placed)
 	furniture_added.emit(placed, preview_instance.global_position)
 	cancel_placement()
 
@@ -85,3 +87,8 @@ func cancel_placement() -> void:
 		preview_instance = null
 
 	selected_furniture_scene = null
+
+func remove_furniture(furniture: Furniture) -> void:
+	if furniture.get_parent() == furniture_3d_container:
+		furniture.queue_free()
+		furniture_removed.emit(furniture)

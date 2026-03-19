@@ -1,11 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3i56vymafxpd"]
+[gd_scene load_steps=4 format=3 uid="uid://d3i56vymafxpd"]
 
 [ext_resource type="Script" uid="uid://ts3mur8te35w" path="res://scripts/room.gd" id="1_88gup"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_v321d"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_88gup"]
+size = Vector3(1, 0.1, 1)
+
 [node name="Room" type="Node3D"]
 script = ExtResource("1_88gup")
+mesh_floor_path = NodePath("Floor")
+mesh_roof_path = NodePath("Roof")
+mesh_wall_n_path = NodePath("Wall_N")
+mesh_wall_e_path = NodePath("Wall_E")
+mesh_wall_s_path = NodePath("Wall_S")
+mesh_wall_w_path = NodePath("Wall_W")
 room_width = 2.5
 room_depth = 3.9
 room_height = 2.4
@@ -14,25 +23,73 @@ room_height = 2.4
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 mesh = SubResource("QuadMesh_v321d")
 
+[node name="Area3D" type="Area3D" parent="Floor" groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+collision_layer = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_88gup")
+
 [node name="Roof" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 8.742278e-08, -3.821371e-15, 0, -4.371139e-08, -1, -8.742278e-08, -1, 4.371139e-08, 0, 3, 0)
+transform = Transform3D(-1, 1.509958e-07, -6.600236e-15, 0, -4.371139e-08, -1, -1.509958e-07, -1, 4.371139e-08, 0, 3, 0)
 mesh = SubResource("QuadMesh_v321d")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Roof"]
 transform = Transform3D(-1, 0, -8.742278e-08, 8.742278e-08, -4.371139e-08, -1, -3.821371e-15, -1, 4.371139e-08, 0, 4.371131e-09, 0.099999905)
 
+[node name="Area3D" type="Area3D" parent="Roof" groups=["walls"]]
+transform = Transform3D(1, -1.509958e-07, 1.509958e-07, -1.509958e-07, -4.3711367e-08, 1, -1.509958e-07, -1, -4.371139e-08, 0, 0, 0)
+collision_layer = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roof/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_88gup")
+
 [node name="Wall_N" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 3, 0, 0, 0, 1, 0, 1.5, -0.5)
 mesh = SubResource("QuadMesh_v321d")
 
+[node name="Area3D" type="Area3D" parent="Wall_N" groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+collision_layer = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall_N/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0500001, 1.1920929e-07)
+shape = SubResource("BoxShape3D_88gup")
+
 [node name="Wall_E" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.9106857e-15, 1.3113416e-07, -1, 3.5527137e-15, 2.9999998, 4.3711392e-08, 1, 0, 1.9106853e-15, 0.5, 1.5, 0)
+transform = Transform3D(-4.371139e-08, 1.3113416e-07, -1, 3.5527137e-15, 2.9999998, 4.371139e-08, 1, -4.9260844e-15, -4.371139e-08, 0.5, 1.5, 0)
 mesh = SubResource("QuadMesh_v321d")
+
+[node name="Area3D" type="Area3D" parent="Wall_E" groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+collision_layer = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall_E/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0500001, 1.1920929e-07)
+shape = SubResource("BoxShape3D_88gup")
 
 [node name="Wall_S" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -3, -1.509958e-07, 0, 4.5298742e-07, -1, 0, 1.5, 0.5)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 3, 0, 8.742278e-08, 0, -1, 0, 1.5, 0.5)
 mesh = SubResource("QuadMesh_v321d")
 
+[node name="Area3D" type="Area3D" parent="Wall_S" groups=["walls"]]
+transform = Transform3D(-1, -8.742278e-08, 3.821371e-15, 0, -4.371139e-08, -1, 8.742278e-08, -1, 4.371139e-08, 0, 0, 0)
+collision_layer = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall_S/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0500001, 1.1920929e-07)
+shape = SubResource("BoxShape3D_88gup")
+
 [node name="Wall_W" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.3711385e-08, -1.3113416e-07, 1, -7.1054274e-15, 3, 4.3711392e-08, -1, 0, -4.371139e-08, -0.5, 1.5, 0)
+transform = Transform3D(-4.371139e-08, -1.3113416e-07, 1, -7.1054274e-15, 3, 4.3711385e-08, -1, -1.5584227e-14, -4.371139e-08, -0.5, 1.5, 0)
 mesh = SubResource("QuadMesh_v321d")
+
+[node name="Area3D" type="Area3D" parent="Wall_W" groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+collision_layer = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall_W/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0500001, 1.1920929e-07)
+shape = SubResource("BoxShape3D_88gup")

@@ -1,13 +1,20 @@
-[gd_scene load_steps=12 format=3 uid="uid://fstm5i3qq632"]
+[gd_scene load_steps=21 format=3 uid="uid://fstm5i3qq632"]
 
 [ext_resource type="PackedScene" uid="uid://dsusbg0u18rv1" path="res://camera.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://d3i56vymafxpd" path="res://room.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://ypi1leyy60t" path="res://scripts/arrangers/arranger_algo.gd" id="3_kek77"]
+[ext_resource type="Script" uid="uid://ypi1leyy60t" path="res://scripts/arrangers/arranger_v1.gd" id="3_kek77"]
+[ext_resource type="Script" uid="uid://c7udav3e6yg7b" path="res://scripts/ui/furniture_button.gd" id="4_4c57u"]
+[ext_resource type="Script" uid="uid://7v25tj68wi2e" path="res://scripts/arrangers/arranger_v2.gd" id="4_dg77c"]
+[ext_resource type="PackedScene" uid="uid://jvxxq5usumj5" path="res://furniture/desk.tscn" id="6_4c57u"]
 [ext_resource type="Script" uid="uid://buwudggba3fp5" path="res://scripts/ui/furniture_picker.gd" id="6_272bh"]
 [ext_resource type="Script" uid="uid://dwrvukjl6sgb7" path="res://scripts/ui/algorithm_picker.gd" id="6_kek77"]
-[ext_resource type="PackedScene" uid="uid://bcubt5x3r540h" path="res://furniture/furniture_wall_adj.tscn" id="7_5vw27"]
-[ext_resource type="PackedScene" uid="uid://b1gvk7nydbm5t" path="res://ui/furniture_button.tscn" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://c2s84wf3il6ii" path="res://furniture/furniture_wall.tscn" id="8_5vw27"]
+[ext_resource type="PackedScene" uid="uid://bcubt5x3r540h" path="res://furniture/bed.tscn" id="7_5vw27"]
+[ext_resource type="PackedScene" uid="uid://0cbdvqnck0ii" path="res://furniture/corkboard.tscn" id="8_4c57u"]
+[ext_resource type="PackedScene" uid="uid://c2s84wf3il6ii" path="res://furniture/shelf.tscn" id="8_5vw27"]
+[ext_resource type="Texture2D" uid="uid://r8j27gfrubuu" path="res://ui/icon_del.png" id="11_efxa6"]
+[ext_resource type="Script" uid="uid://uwim403y8q2p" path="res://scripts/ui/room_edit_control.gd" id="12_w48qg"]
+[ext_resource type="Texture2D" uid="uid://vj71ccnb7nxj" path="res://ui/icon_close.png" id="13_vivmo"]
+[ext_resource type="Script" uid="uid://b360r30p3m0w0" path="res://scripts/ui/furniture_edit_control.gd" id="14_vivmo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5vw27"]
 sky_top_color = Color(2.5990605e-05, 0.73407626, 0.9291402, 1)
@@ -23,8 +30,14 @@ background_mode = 2
 background_color = Color(0.582, 0.9376666, 0.97, 1)
 sky = SubResource("Sky_lquwl")
 ambient_light_source = 2
-ambient_light_color = Color(0.74, 0.71533334, 0.592, 1)
+ambient_light_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
 reflected_light_source = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vw27"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kek77"]
+bg_color = Color(1, 0.92, 0.7, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -39,16 +52,24 @@ environment = SubResource("Environment_0xm2m")
 
 [node name="Arrangers" type="Node" parent="."]
 
-[node name="Arranger_Algo" type="Node" parent="Arrangers"]
+[node name="ArrangerV1" type="Node" parent="Arrangers"]
 script = ExtResource("3_kek77")
 room_path = NodePath("../../Room")
-furniture_picker_path = NodePath("../../UI/FurniturePicker")
+furniture_picker_path = NodePath("../../UI/MenuControl/FurniturePicker")
 metadata/_custom_type_script = "uid://ypi1leyy60t"
+
+[node name="ArrangerV2" type="Node" parent="Arrangers"]
+script = ExtResource("4_dg77c")
+room_path = NodePath("../../Room")
+step_duration = 0.1
+shift_step_duration = 0.03
+furniture_picker_path = NodePath("../../UI/MenuControl/FurniturePicker")
+metadata/_custom_type_script = "uid://7v25tj68wi2e"
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="UI"]
-custom_minimum_size = Vector2(0, 100)
+[node name="MenuControl" type="Control" parent="UI"]
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -56,61 +77,337 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+size_flags_vertical = 8
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Control"]
-custom_minimum_size = Vector2(0, 100)
+[node name="FurniturePicker" type="Node" parent="UI/MenuControl"]
+script = ExtResource("6_272bh")
+button_container_path = NodePath("../PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer/ScrollContainer/HBoxContainer")
+furniture_3d_container_path = NodePath("../../..")
+metadata/_custom_type_script = "uid://buwudggba3fp5"
+
+[node name="AlgorithmPicker" type="Node" parent="UI/MenuControl" node_paths=PackedStringArray("algorithm_options")]
+script = ExtResource("6_kek77")
+algorithm_options = {
+"V1": NodePath("../../../Arrangers/ArrangerV1"),
+"V2": NodePath("../../../Arrangers/ArrangerV2")
+}
+opt_button_path = NodePath("../PanelContainer/MarginContainer/HBoxContainer/ArrangerContainer/AlgoOptions")
+confirm_button_path = NodePath("../PanelContainer/MarginContainer/HBoxContainer/ArrangerContainer/GenButton")
+metadata/_custom_type_script = "uid://dwrvukjl6sgb7"
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/MenuControl"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5vw27")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MenuControl/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MenuControl/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="FurnitureContainer" type="VBoxContainer" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleLb" type="Label" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.41666675, 1, 1)
+text = "Furniture"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HSplitContainer" type="HSplitContainer" parent="UI/Control/ScrollContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer"]
+[node name="FurnitureButton" type="Button" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Floor" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer/HBoxContainer" instance=ExtResource("7_272bh")]
-layout_mode = 2
-
-[node name="Wall_ADJ" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer/HBoxContainer" instance=ExtResource("7_272bh")]
-layout_mode = 2
+script = ExtResource("4_4c57u")
 furniture_scene = ExtResource("7_5vw27")
+metadata/_custom_type_script = "uid://c7udav3e6yg7b"
 
-[node name="Wall" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer/HBoxContainer" instance=ExtResource("7_272bh")]
+[node name="FurnitureButton2" type="Button" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
+script = ExtResource("4_4c57u")
+furniture_scene = ExtResource("6_4c57u")
+metadata/_custom_type_script = "uid://c7udav3e6yg7b"
+
+[node name="FurnitureButton3" type="Button" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("4_4c57u")
 furniture_scene = ExtResource("8_5vw27")
+metadata/_custom_type_script = "uid://c7udav3e6yg7b"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer"]
+[node name="FurnitureButton4" type="Button" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/FurnitureContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("4_4c57u")
+furniture_scene = ExtResource("8_4c57u")
+metadata/_custom_type_script = "uid://c7udav3e6yg7b"
+
+[node name="VSeparator" type="VSeparator" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="OptionButton" type="OptionButton" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="ArrangerContainer" type="VBoxContainer" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="TitleLb" type="Label" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/ArrangerContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Arranger"
+
+[node name="AlgoOptions" type="OptionButton" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/ArrangerContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="GenButton" type="Button" parent="UI/MenuControl/PanelContainer/MarginContainer/HBoxContainer/ArrangerContainer"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 text = "Generate!"
 
-[node name="FurniturePicker" type="Node" parent="UI"]
-script = ExtResource("6_272bh")
-button_container_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/HBoxContainer")
-furniture_container_path = NodePath("../..")
-metadata/_custom_type_script = "uid://buwudggba3fp5"
+[node name="RoomEditControl" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_w48qg")
+room_path = NodePath("../../Room")
+width_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/WidthInput/LineEdit")
+depth_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/DepthInput/LineEdit")
+height_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeightInput/LineEdit")
+close_button_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CloseButton")
 
-[node name="AlgorithmPicker" type="Node" parent="UI" node_paths=PackedStringArray("algorithm_options")]
-script = ExtResource("6_kek77")
-algorithm_options = {
-"Rework": NodePath("../../Arrangers/Arranger_Algo")
-}
-opt_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/OptionButton")
-confirm_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/Button")
-metadata/_custom_type_script = "uid://dwrvukjl6sgb7"
+[node name="PanelContainer" type="PanelContainer" parent="UI/RoomEditControl"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kek77")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/RoomEditControl/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/RoomEditControl/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLb" type="Label" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Edit Room"
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+icon = ExtResource("13_vivmo")
+icon_alignment = 1
+expand_icon = true
+
+[node name="HSeparator" type="HSeparator" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="WidthInput" type="HBoxContainer" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLb" type="Label" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/WidthInput"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Width"
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/WidthInput"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+placeholder_text = "m"
+
+[node name="DepthInput" type="HBoxContainer" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLb" type="Label" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/DepthInput"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Depth"
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/DepthInput"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+placeholder_text = "m"
+
+[node name="HeightInput" type="HBoxContainer" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLb" type="Label" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/HeightInput"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Height"
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI/RoomEditControl/PanelContainer/MarginContainer/VBoxContainer/HeightInput"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+placeholder_text = "m"
+
+[node name="FurnitureEditControl" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_vivmo")
+width_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/WidthInput/LineEdit")
+depth_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/DepthInput/LineEdit")
+height_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeightInput/LineEdit")
+close_button_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CloseButton")
+delete_button_path = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DeleteButton")
+furniture_picker_path = NodePath("../MenuControl/FurniturePicker")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/FurnitureEditControl"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kek77")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/FurnitureEditControl/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLb" type="Label" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Edit Object"
+vertical_alignment = 1
+
+[node name="DeleteButton" type="Button" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+icon = ExtResource("11_efxa6")
+icon_alignment = 1
+expand_icon = true
+
+[node name="CloseButton" type="Button" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+icon = ExtResource("13_vivmo")
+icon_alignment = 1
+expand_icon = true
+
+[node name="HSeparator" type="HSeparator" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="WidthInput" type="HBoxContainer" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLb" type="Label" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/WidthInput"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Width"
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/WidthInput"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+placeholder_text = "cm"
+
+[node name="DepthInput" type="HBoxContainer" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLb" type="Label" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/DepthInput"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Depth"
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/DepthInput"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+placeholder_text = "cm"
+
+[node name="HeightInput" type="HBoxContainer" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLb" type="Label" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/HeightInput"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.29921982, 0.2178084, 0.16475266, 1)
+text = "Height"
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UI/FurnitureEditControl/PanelContainer/MarginContainer/VBoxContainer/HeightInput"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+placeholder_text = "cm"

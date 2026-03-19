@@ -1,5 +1,5 @@
 extends Arranger
-class_name Arranger_Algo
+class_name ArrangerV1
 
 enum WallSide {
 	NORTH,
@@ -8,7 +8,8 @@ enum WallSide {
 	WEST
 }
 
-@export var room_path: NodePath
+@export_node_path("Room") var room_path: NodePath
+
 @export var randomize_on_ready: bool = true
 
 @onready var room: Room = get_node(room_path)

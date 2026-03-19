@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://jvxxq5usumj5"]
+
+[ext_resource type="Script" uid="uid://ck26qijw7ms2h" path="res://scripts/furniture/furniture.gd" id="1_17fcx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wcx71"]
+size = Vector3(1.05, 0.75, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ohkw"]
+
+[node name="Desk" type="Node3D"]
+script = ExtResource("1_17fcx")
+model_path = NodePath("Model")
+area3d_path = NodePath("Area3D")
+collider_path = NodePath("Area3D/CollisionShape3D")
+placement_type = 1
+size = Vector3(1.05, 0.75, 0.5)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+shape = SubResource("BoxShape3D_wcx71")
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(1.05, 0, 0, 0, 0.75, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 0.20000002, 0, 0, 0, 1, 0, 0.90000004, 0)
+mesh = SubResource("BoxMesh_7ohkw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(0.4, 0, 0, 0, 0.8000001, 0, 0, 0, 1, -0.3, 0.4, 0)
+mesh = SubResource("BoxMesh_7ohkw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(0.05, 0, 0, 0, 0.8000001, 0, 0, 0, 1, 0.475, 0.4, 0)
+mesh = SubResource("BoxMesh_7ohkw")
+skeleton = NodePath("../..")

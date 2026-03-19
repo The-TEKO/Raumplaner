@@ -3,8 +3,8 @@ class_name AlgorithmPicker
 
 @export var algorithm_options: Dictionary[String, Arranger] = {}
 
-@export var opt_button_path: NodePath
-@export var confirm_button_path: NodePath
+@export_node_path("OptionButton") var opt_button_path: NodePath
+@export_node_path("Button") var confirm_button_path: NodePath
 
 @onready var opt_button: OptionButton = get_node(opt_button_path)
 @onready var confirm_button: Button = get_node(confirm_button_path)
