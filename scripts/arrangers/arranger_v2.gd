@@ -134,6 +134,7 @@ func _step_place_floor_wall_adj():
 	# if collides with a wall, try again
 	if not current_piece.is_inside_room():
 		print("Piece ", current_piece.name, " doesn't fit into room, trying again...")
+		walls_failed.append(wall) # mark this wall as failed for this piece
 		return
 
 	# if colliding with another piece, start shift

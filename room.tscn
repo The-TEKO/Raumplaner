@@ -9,6 +9,7 @@ size = Vector3(1, 0.1, 1)
 
 [node name="Room" type="Node3D"]
 script = ExtResource("1_88gup")
+light_path = NodePath("Roof/OmniLight3D")
 mesh_floor_path = NodePath("Floor")
 mesh_roof_path = NodePath("Roof")
 mesh_wall_n_path = NodePath("Wall_N")

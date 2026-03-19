@@ -2,6 +2,7 @@
 extends Node3D
 class_name Room
 
+@export_node_path("OmniLight3D") var light_path: NodePath
 @export_node_path("MeshInstance3D") var mesh_floor_path:  NodePath
 @export_node_path("MeshInstance3D") var mesh_roof_path:   NodePath
 @export_node_path("MeshInstance3D") var mesh_wall_n_path: NodePath
@@ -13,6 +14,7 @@ class_name Room
 @export var room_depth:  float = 5
 @export var room_height: float = 2
 
+@onready var light: OmniLight3D = get_node(light_path)
 @onready var mesh_floor:  MeshInstance3D = get_node(mesh_floor_path)
 @onready var mesh_roof:   MeshInstance3D = get_node(mesh_roof_path)
 @onready var mesh_wall_n: MeshInstance3D = get_node(mesh_wall_n_path)
