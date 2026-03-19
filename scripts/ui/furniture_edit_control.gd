@@ -39,7 +39,7 @@ func _on_delete_pressed():
 
 func _open_edit_dialog(piece: Furniture) -> void:
 	current_piece = piece
-	width.text = str(current_piece.size.x)
-	depth.text = str(current_piece.size.z)
-	height.text = str(current_piece.size.y)
+	width.text = str(round(current_piece.size.x*100.0)/100.0)
+	depth.text = str(round(current_piece.size.z*100.0)/100.0)
+	height.text = str(round(current_piece.size.y*100.0)/100.0)
 	self.visible = true

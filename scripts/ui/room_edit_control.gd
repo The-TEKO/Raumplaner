@@ -13,9 +13,9 @@ extends Control
 @onready var close_button: Button = get_node(close_button_path)
 
 func _ready() -> void:
-	width.text = str(room.room_width)
-	depth.text = str(room.room_depth)
-	height.text = str(room.room_height)
+	width.text = str(round(room.room_width*100.0)/100.0)
+	depth.text = str(round(room.room_depth*100.0)/100.0)
+	height.text = str(round(room.room_height*100.0)/100.0)
 	
 	room.area_clicked.connect(_on_area_clicked)
 	close_button.pressed.connect(_on_close_pressed)
