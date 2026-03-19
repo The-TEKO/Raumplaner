@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://fstm5i3qq632"]
+[gd_scene load_steps=13 format=3 uid="uid://fstm5i3qq632"]
 
 [ext_resource type="PackedScene" uid="uid://dsusbg0u18rv1" path="res://camera.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://d3i56vymafxpd" path="res://room.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dhbxr3u6qksju" path="res://scripts/arrangers/arranger_1.gd" id="3_5vw27"]
+[ext_resource type="Script" uid="uid://ypi1leyy60t" path="res://scripts/arrangers/arranger_algo.gd" id="3_kek77"]
 [ext_resource type="Script" uid="uid://buwudggba3fp5" path="res://scripts/ui/furniture_picker.gd" id="6_272bh"]
 [ext_resource type="Script" uid="uid://dwrvukjl6sgb7" path="res://scripts/ui/algorithm_picker.gd" id="6_kek77"]
 [ext_resource type="PackedScene" uid="uid://bcubt5x3r540h" path="res://furniture/furniture_wall_adj.tscn" id="7_5vw27"]
@@ -39,6 +40,10 @@ room_path = NodePath("../Room")
 picker_path = NodePath("../UI/FurniturePicker")
 metadata/_custom_type_script = "uid://dhbxr3u6qksju"
 
+[node name="Arranger_Algo" type="Node" parent="."]
+script = ExtResource("3_kek77")
+metadata/_custom_type_script = "uid://ypi1leyy60t"
+
 [node name="Room" parent="." instance=ExtResource("1_ig7tw")]
 
 [node name="Preview" type="Node3D" parent="."]
@@ -54,7 +59,8 @@ metadata/_custom_type_script = "uid://buwudggba3fp5"
 [node name="AlgorithmPicker" type="Node" parent="UI" node_paths=PackedStringArray("algorithm_options")]
 script = ExtResource("6_kek77")
 algorithm_options = {
-"Arranger A": NodePath("../../Arranger_A")
+"Arranger A": NodePath("../../Arranger_A"),
+"Rework": NodePath("../../Arranger_Algo")
 }
 opt_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/OptionButton")
 confirm_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/Button")
