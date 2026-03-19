@@ -1,7 +1,7 @@
 # Raumplaner
 
 Ein interaktiver 3D-Raumplaner, entwickelt mit **Godot 4.5**.  
-Möbel können manuell in einem anpassbaren Raum platziert oder automatisch durch einen Layout-Algorithmus angeordnet werden.
+Möbel können in einem anpassbaren Raum platziert und durch einen Layout-Algorithmus angeordnet werden.
 
 ## Features
 
