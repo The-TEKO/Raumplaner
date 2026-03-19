@@ -33,19 +33,31 @@ environment = SubResource("Environment_0xm2m")
 
 [node name="Camera" parent="." instance=ExtResource("1_0xm2m")]
 
+[node name="Arranger_Algo" type="Node" parent="."]
+script = ExtResource("3_kek77")
+room_path = NodePath("../Room")
+metadata/_custom_type_script = "uid://ypi1leyy60t"
+
 [node name="Room" parent="." instance=ExtResource("1_ig7tw")]
 
 [node name="Preview" type="Node3D" parent="."]
 
-[node name="Arrangers" type="Node" parent="."]
-
-[node name="Arranger_Algo" type="Node" parent="Arrangers"]
-script = ExtResource("3_kek77")
-room_path = NodePath("../../Room")
-furniture_picker_path = NodePath("../../UI/FurniturePicker")
-metadata/_custom_type_script = "uid://ypi1leyy60t"
-
 [node name="UI" type="CanvasLayer" parent="."]
+
+[node name="FurniturePicker" type="Node" parent="UI"]
+script = ExtResource("6_272bh")
+button_container_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/HBoxContainer")
+furniture_container_path = NodePath("../..")
+metadata/_custom_type_script = "uid://buwudggba3fp5"
+
+[node name="AlgorithmPicker" type="Node" parent="UI" node_paths=PackedStringArray("algorithm_options")]
+script = ExtResource("6_kek77")
+algorithm_options = {
+"Rework": NodePath("../../Arranger_Algo")
+}
+opt_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/OptionButton")
+confirm_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/Button")
+metadata/_custom_type_script = "uid://dwrvukjl6sgb7"
 
 [node name="Control" type="Control" parent="UI"]
 custom_minimum_size = Vector2(0, 100)
@@ -99,18 +111,3 @@ layout_mode = 2
 [node name="Button" type="Button" parent="UI/Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 text = "Generate!"
-
-[node name="FurniturePicker" type="Node" parent="UI"]
-script = ExtResource("6_272bh")
-button_container_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/HBoxContainer")
-furniture_container_path = NodePath("../..")
-metadata/_custom_type_script = "uid://buwudggba3fp5"
-
-[node name="AlgorithmPicker" type="Node" parent="UI" node_paths=PackedStringArray("algorithm_options")]
-script = ExtResource("6_kek77")
-algorithm_options = {
-"Rework": NodePath("../../Arrangers/Arranger_Algo")
-}
-opt_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/OptionButton")
-confirm_button_path = NodePath("../Control/ScrollContainer/HBoxContainer/HSplitContainer/VBoxContainer/Button")
-metadata/_custom_type_script = "uid://dwrvukjl6sgb7"

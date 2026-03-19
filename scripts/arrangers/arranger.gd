@@ -1,15 +1,15 @@
 # This Script defines the core layout generation algorithm
-extends Node
+@abstract extends Node
 class_name Arranger
 
-@export var picker_path: NodePath
+@export var furniture_picker_path: NodePath
+
+@onready var furniture_picker: FurniturePicker = get_node(furniture_picker_path)
 
 var placed_furniture: Dictionary[Furniture.PlacementType, Array] = {}
 
-@onready var picker: FurniturePicker = get_node(picker_path)
-
 func _ready() -> void:
-	picker.furniture_added.connect(_on_furniture_added)
+	furniture_picker.furniture_added.connect(_on_furniture_added)
 
 func _on_furniture_added(furniture: Furniture, _position: Vector3):
 	add_furniture_to_list(furniture)
@@ -33,5 +33,4 @@ func remove_furniture_to_list(piece: Furniture):
 	if idx != -1:
 		placed_furniture[type].remove_at(idx)
 
-func do_layout_generation():
-	pass
+@abstract func do_layout_generation()
